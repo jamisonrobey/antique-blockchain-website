@@ -1,0 +1,21 @@
+fontend/node_modules
+
+
+# front end
+frontend/node_modules
+frontend/dist
+frontend/dist-ssr
+frontend/*.local
+
+frontend/.vscode/*
+frontend/!.vscode/extensions.json
+frontend/.idea
+frontend/.DS_Store
+frontend/*.suo
+frontend/*.ntvs*
+frontend/*.njsproj
+frontend/*.sln
+frontend/*.sw?
+
+# solidity artifacts
+**/artifacts/
