@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${interText.className} bg-white grid place-items-center`}
+        className={`${interText.className} mx-auto  grid place-items-center bg-white`}
       >
         {children}
       </body>
