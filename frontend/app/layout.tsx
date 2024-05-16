@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header/Header";
+
 export const interText = Inter({ weight: "400", subsets: ["latin"] });
 export const interHeading = Inter({ weight: "700", subsets: ["latin"] });
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "AntiqueChain",
 };
 
@@ -15,8 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${interText.className} grid place-items-center`}>
-        <Header />
+      <body
+        className={`${interText.className} bg-white grid place-items-center`}
+      >
         {children}
       </body>
     </html>
