@@ -16,7 +16,7 @@ export const Body = () => {
   return (
     <>
       {account ? (
-        <div className="min-h-screen/2 flex h-[80vh] w-full items-center justify-center border-x-2 border-slate-200 px-2 sm:w-3/4 sm:px-32 ">
+        <div className="flex h-[80vh] w-full items-center justify-center border-x-2 border-slate-200 px-2 sm:w-3/4 sm:px-0">
           <Search />
         </div>
       ) : (

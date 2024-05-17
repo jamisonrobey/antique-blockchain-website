@@ -14,7 +14,7 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
     return (
       <Select.Item
         className={classnames(
-          "relative  flex h-[25px] select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-[13px] leading-none text-slate-800 hover:bg-blue-500 data-[highlighted]:bg-blue-500 data-[highlighted]:text-white data-[highlighted]:outline-none",
+          "relative  flex h-[25px] select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-[13px] leading-none text-slate-800 hover:bg-blue-500 hover:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white data-[highlighted]:outline-none",
           className,
         )}
         value={value}

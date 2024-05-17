@@ -12,7 +12,7 @@ export const Header = () => {
     }
   };
   return (
-    <div className="mt-4 flex w-full justify-evenly px-2 sm:px-32 md:w-3/4 ">
+    <div className="my-4 flex w-full justify-evenly px-2 sm:px-32 md:w-3/4 ">
       <div className="flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ export const Header = () => {
         <h1 className={`${interHeading.className}`}>
           <Link
             href="/"
-            className="text-slate-800 duration-100 hover:text-blue-500 sm:text-xl"
+            className="text-slate-800 duration-100 hover:text-blue-500 sm:text-3xl"
           >
             AntiqueChain
           </Link>

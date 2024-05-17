@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { MetaMaskProvider, useSDK } from "@metamask/sdk-react";
 import { Header } from "@/components/Header";
 import { Body } from "@/components/Body";
 import { Footer } from "@/components/Footer";
+import { useSearchParams } from "next/navigation";
 export default function Home() {
   const { sdk, connected } = useSDK();
   const [loading, setLoading] = useState(true);
