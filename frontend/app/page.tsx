@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { MetaMaskProvider, useSDK } from "@metamask/sdk-react";
 import { Header } from "@/components/Header";
 import { Body } from "@/components/Body";
-import { Suspense } from "react";
 import { Footer } from "@/components/Footer";
 export default function Home() {
   const { sdk, connected } = useSDK();

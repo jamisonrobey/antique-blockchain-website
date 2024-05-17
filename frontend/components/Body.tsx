@@ -1,7 +1,9 @@
 import { interHeading } from "@/app/layout";
 import { useSDK } from "@metamask/sdk-react";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { Search } from "./Search/Search";
 import Link from "next/link";
+
 export const Body = () => {
   const { sdk, connected, connecting, account } = useSDK();
   const connect = async () => {
@@ -15,7 +17,7 @@ export const Body = () => {
     <>
       {account ? (
         <div className="min-h-screen/2 flex h-[80vh] w-full items-center justify-center border-x-2 border-slate-200 px-2 sm:w-3/4 sm:px-32 ">
-          CONTENT
+          <Search />
         </div>
       ) : (
         <div className="fixed  inset-0 z-10 backdrop-blur-sm ">

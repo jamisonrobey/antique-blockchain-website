@@ -32,7 +32,7 @@ export const Header = () => {
         <h1 className={`${interHeading.className}`}>
           <Link
             href="/"
-            className="text-slate-800 duration-150 hover:text-slate-500 sm:text-xl"
+            className="text-slate-800 duration-100 hover:text-blue-500 sm:text-xl"
           >
             AntiqueChain
           </Link>
@@ -50,7 +50,7 @@ export const Header = () => {
               </Tooltip.Trigger>
               <Tooltip.Portal>
                 <Tooltip.Content
-                  className="select-none rounded-[4px] bg-slate-800/80 px-[15px] py-[10px] text-[15px] leading-none  text-white will-change-[transform,opacity] data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade  data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade"
+                  className="select-none rounded-[4px] bg-slate-800/70 px-[15px] py-[10px] text-[15px] leading-none  text-white will-change-[transform,opacity] data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade  data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade"
                   sideOffset={5}
                 >
                   Disconnect
@@ -70,7 +70,7 @@ export const Header = () => {
               </Tooltip.Trigger>
               <Tooltip.Portal>
                 <Tooltip.Content
-                  className="select-none rounded-[4px] bg-slate-800/80 px-[15px] py-[10px] text-[15px]  leading-none text-white will-change-[transform,opacity] data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade  data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade"
+                  className="select-none rounded-[4px] bg-slate-800/70 px-[15px] py-[10px] text-[15px]  leading-none text-white will-change-[transform,opacity] data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade  data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade"
                   sideOffset={5}
                 >
                   <div>{account}</div>
