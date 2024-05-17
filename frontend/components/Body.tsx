@@ -14,7 +14,9 @@ export const Body = () => {
   return (
     <>
       {account ? (
-        <div className="w-full ">CONTENT</div>
+        <div className="min-h-screen/2 flex h-[80vh] w-full items-center justify-center border-x-2 border-slate-200 px-2 sm:w-3/4 sm:px-32 ">
+          CONTENT
+        </div>
       ) : (
         <div className="fixed  inset-0 z-10 backdrop-blur-sm ">
           <div className="flex min-h-screen items-center justify-center">
