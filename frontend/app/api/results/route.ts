@@ -220,6 +220,5 @@ export async function GET(request: Request) {
     endIndex = items.length;
   }
   const paginatedItems = items.slice(startIndex, endIndex);
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   return NextResponse.json(paginatedItems, { status: 200 });
 }
