@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { interText } from "@/components/fonts/fonts";
-
 const metadata: Metadata = {
   title: "AntiqueChain",
 };

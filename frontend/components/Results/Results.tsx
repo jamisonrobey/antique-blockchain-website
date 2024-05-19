@@ -1,17 +1,14 @@
-import useSWR from "swr";
 import { Item } from "@/types/types";
 import { useEffect, useState } from "react";
 import { AntiqueResult } from "./AntiqueResult";
 import { LoadingResults } from "./LoadingResults";
-interface ResultsProps {}
-export const Results: React.FC<ResultsProps> = () => {
+interface ResultsProps {
+  initialResults: Item[];
+}
+export const Results: React.FC<ResultsProps> = ({ initialResults }) => {
   const [page, setPage] = useState(1);
-  const [results, setResults] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [results, setResults] = useState<Item[]>(initialResults);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = () => {
     fetch(`/api/results?page=${page}`)

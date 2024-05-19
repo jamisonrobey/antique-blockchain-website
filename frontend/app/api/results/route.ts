@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const items = [
+export const items = [
   {
     name: "Antique Wooden Chair",
     category: "furniture",

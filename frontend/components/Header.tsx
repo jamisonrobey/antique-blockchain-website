@@ -1,3 +1,4 @@
+"use client";
 import { interHeading } from "./fonts/fonts";
 import { useSDK } from "@metamask/sdk-react";
 import Link from "next/link";

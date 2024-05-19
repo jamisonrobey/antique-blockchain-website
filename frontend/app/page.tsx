@@ -1,27 +1,19 @@
-"use client";
-import { Suspense, useEffect, useState } from "react";
-import { MetaMaskProvider, useSDK } from "@metamask/sdk-react";
+import { Footer } from "@/components/Footer";
+import { items } from "./api/results/route";
+import { Provider } from "@/components/Provider";
 import { Header } from "@/components/Header";
 import { Body } from "@/components/Body";
-import { Footer } from "@/components/Footer";
-import { useSearchParams } from "next/navigation";
-export default function Home() {
-  const { sdk, connected } = useSDK();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (sdk) {
-      setLoading(false);
-    }
-  }, [sdk]);
-
+export default async function Home() {
+  const initialResults = items.slice(0, 14);
   return (
-    <MetaMaskProvider sdkOptions={{ dappMetadata: {} }}>
-      <Header />
-      <div className="w-full border-b-2 border-slate-200"></div>
-      <Body />
+    <>
+      <Provider>
+        <Header />
+        <div className="w-full border-b-2 border-slate-200"></div>
+        <Body initialResults={initialResults} />
+      </Provider>
       <div className="w-full border-t-2 border-slate-200"></div>
       <Footer />
-    </MetaMaskProvider>
+    </>
   );
 }

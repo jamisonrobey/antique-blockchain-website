@@ -1,10 +1,16 @@
+"use client";
 import { interHeading } from "./fonts/fonts";
 import { useSDK } from "@metamask/sdk-react";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Search } from "./Search/Search";
 import Link from "next/link";
+import { Item } from "@/types/types";
 
-export const Body = () => {
+interface BodyProps {
+  initialResults: Item[];
+}
+
+export const Body: React.FC<BodyProps> = ({ initialResults }) => {
   const { sdk, connected, connecting, account } = useSDK();
   const connect = async () => {
     try {
@@ -13,11 +19,17 @@ export const Body = () => {
       console.warn(`No accounts found`, err);
     }
   };
+
+  const disconnect = () => {
+    if (sdk) {
+      sdk.terminate();
+    }
+  };
   return (
     <>
       {account ? (
         <div className="flex h-[80vh] w-full items-center justify-center border-x-2 border-slate-200 px-2 sm:w-3/4 sm:px-0">
-          <Search />
+          <Search initialResults={initialResults} />
         </div>
       ) : (
         <div className="fixed  inset-0 z-10 backdrop-blur-sm ">
