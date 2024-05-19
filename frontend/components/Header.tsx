@@ -1,4 +1,4 @@
-import { interHeading } from "@/app/layout";
+import { interHeading } from "./fonts/fonts";
 import { useSDK } from "@metamask/sdk-react";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";

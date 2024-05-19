@@ -1,4 +1,4 @@
-import { interHeading } from "@/app/layout";
+import { interHeading } from "./fonts/fonts";
 import { useSDK } from "@metamask/sdk-react";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Search } from "./Search/Search";

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import { interText } from "@/components/fonts/fonts";
 
-export const interText = Inter({ weight: "400", subsets: ["latin"] });
-export const interHeading = Inter({ weight: "700", subsets: ["latin"] });
 const metadata: Metadata = {
   title: "AntiqueChain",
 };
