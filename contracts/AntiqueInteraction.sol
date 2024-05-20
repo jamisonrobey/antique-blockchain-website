@@ -15,7 +15,6 @@ contract AntiqueInteraction is AntiqueCertification {
         );
         require(antiques.length > 0, "There are no antiques stored");
 
-
         /* Handle special 'all' keyword  */
         bool matchAllCategories = keccak256(abi.encodePacked(categoryStr)) ==
             keccak256(abi.encodePacked("all"));
@@ -56,7 +55,7 @@ contract AntiqueInteraction is AntiqueCertification {
         }
 
         Antique[] memory resultArray = new Antique[](count);
-        for(uint256 j = 0; j < count; j++) {
+        for (uint256 j = 0; j < count; j++) {
             resultArray[j] = tempArray[j];
         }
 
