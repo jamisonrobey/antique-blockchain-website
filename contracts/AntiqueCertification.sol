@@ -3,12 +3,12 @@ import "./utils.sol";
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract AntiqueCreation is Utils {
+contract AntiqueCertification is Utils {
     address private antiqueCertificationBody;
-    Antique[] private antiques;
+    Antique[] internal antiques;
 
     constructor() {
-        antiqueCertificationBody = msg.sender;
+        antiqueCertificationBody = 0x0Ee81Eb6195A764193D8BAEC3ad59e40e1980777;
     }
 
     modifier onlyOwner() {
@@ -33,7 +33,7 @@ contract AntiqueCreation is Utils {
         );
     }
 
-    function getAntique(uint256 index) public view returns (Antique memory) {
+    function getAntique(uint256 index) private view returns (Antique memory) {
         require(index < antiques.length, "Invalid index");
         return antiques[index];
     }
