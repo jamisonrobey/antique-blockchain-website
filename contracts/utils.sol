@@ -5,6 +5,28 @@ pragma solidity ^0.8.0;
     it is simply a contract that is inherited by AntiqueCreation AntiqueInteraction contract's  that provides heplful functions
 */
 
+enum Category {
+    Furniture,
+    Pottery,
+    Glassware,
+    Collectibles
+}
+
+enum Period {
+    Pre1700s,
+    _1800s,
+    _1900s,
+    _2000s
+}
+
+struct Antique {
+    string name;
+    Category category;
+    Period period;
+    address owner;
+    bool available;
+}
+
 contract Utils {
     /* Handy toLower() implementation from: https://gist.github.com/ottodevs/c43d0a8b4b891ac2da675f825b1d1dbf?permalink_comment_id=4976821#gistcomment-4976821 */
     function copyBytes(
@@ -75,15 +97,15 @@ contract Utils {
         ) return Period.Pre1700s;
         else if (
             keccak256(abi.encodePacked(lowerPeriod)) ==
-            keccak256(abi.encodePacked("_1800s"))
+            keccak256(abi.encodePacked("1800s"))
         ) return Period._1800s;
         else if (
             keccak256(abi.encodePacked(lowerPeriod)) ==
-            keccak256(abi.encodePacked("_1900s"))
+            keccak256(abi.encodePacked("1900s"))
         ) return Period._1900s;
         else if (
             keccak256(abi.encodePacked(lowerPeriod)) ==
-            keccak256(abi.encodePacked("_2000s"))
+            keccak256(abi.encodePacked("2000s"))
         ) return Period._2000s;
         else revert("Invalid period");
     }
@@ -107,26 +129,4 @@ contract Utils {
         if (period == Period._1900s) return "1900s";
         else return "2000s";
     }
-}
-
-enum Category {
-    Furniture,
-    Pottery,
-    Glassware,
-    Collectibles
-}
-
-enum Period {
-    Pre1700s,
-    _1800s,
-    _1900s,
-    _2000s
-}
-
-struct Antique {
-    string name;
-    Category category;
-    Period period;
-    bool available;
-    address owner;
 }

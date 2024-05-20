@@ -18,4 +18,23 @@ contract AntiqueCreation is Utils {
         );
         _;
     }
+
+    function addAnqitue(
+        string memory name,
+        string memory categoryStr,
+        string memory periodStr,
+        address antiqueOwner,
+        bool availability
+    ) public onlyOwner {
+        Category category = stringToCategory(categoryStr);
+        Period period = stringToPeriod(periodStr);
+        antiques.push(
+            Antique(name, category, period, antiqueOwner, availability)
+        );
+    }
+
+    function getAntique(uint256 index) public view returns (Antique memory) {
+        require(index < antiques.length, "Invalid index");
+        return antiques[index];
+    }
 }
