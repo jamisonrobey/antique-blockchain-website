@@ -88,13 +88,22 @@ contract Utils {
         else revert("Invalid period");
     }
 
+    /* Helpers to convert enum to string for output */
+
     function categoryToString(
         Category category
-    ) public pure returns (string memory) {
+    ) internal pure returns (string memory) {
         if (category == Category.Furniture) return "Furniture";
         else if (category == Category.Pottery) return "Pottery";
         else if (category == Category.Glassware) return "Glassware";
         else return "Collectibles";
+    }
+
+    function periodToString(Period period) internal pure returns (string memory) {
+        if (period == Period.Pre1700s) return "Pre1700s";
+        if (period == Period._1800s) return "1800s";
+        if (period == Period._1900s) return "1900s";
+        else return return "2000s";
     }
 }
 

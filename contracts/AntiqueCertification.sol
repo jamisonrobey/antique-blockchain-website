@@ -1,9 +1,9 @@
-import "./types.sol";
+import "./utils.sol";
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract AntiqueCreation {
+contract AntiqueCreation is Utils {
     address private antiqueCertificationBody;
     Antique[] private antiques;
 
