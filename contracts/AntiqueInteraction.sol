@@ -15,7 +15,7 @@ contract AntiqueInteraction is AntiqueCertification {
         );
         require(antiques.length > 0, "There are no antiques stored");
 
-        /* Handle special 'all' keyword  */
+        /* Handle special all keyword  */
         bool matchAllCategories = keccak256(abi.encodePacked(categoryStr)) ==
             keccak256(abi.encodePacked("all"));
         bool matchAllPeriods = keccak256(abi.encodePacked(periodStr)) ==
