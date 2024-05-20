@@ -33,6 +33,8 @@ contract AntiqueInteraction is AntiqueCertification {
             period = stringToPeriod(periodStr);
         }
 
+        /* need two arrays: we don't know if we will number of requested antiques or we will have to return less*/
+
         Antique[] memory tempArray = new Antique[](numAntiques);
         uint256 count = 0;
 
@@ -54,6 +56,9 @@ contract AntiqueInteraction is AntiqueCertification {
             }
         }
 
+        if (count == numAntiques) return tempArray; // successfully retrieved number of requested antiques
+
+        /* Couldn't get number of requested antiques, so create new properly sized array */
         Antique[] memory resultArray = new Antique[](count);
         for (uint256 j = 0; j < count; j++) {
             resultArray[j] = tempArray[j];
