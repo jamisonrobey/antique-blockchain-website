@@ -99,11 +99,13 @@ contract Utils {
         else return "Collectibles";
     }
 
-    function periodToString(Period period) internal pure returns (string memory) {
+    function periodToString(
+        Period period
+    ) internal pure returns (string memory) {
         if (period == Period.Pre1700s) return "Pre1700s";
         if (period == Period._1800s) return "1800s";
         if (period == Period._1900s) return "1900s";
-        else return return "2000s";
+        else return "2000s";
     }
 }
 
