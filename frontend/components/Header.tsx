@@ -6,8 +6,12 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 export const Header = () => {
-  const { isConnected, address } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { account, sdk } = useSDK();
+  const disconnect = async () => {
+    if (sdk) {
+      sdk.terminate();
+    }
+  };
   return (
     <div className="my-4 flex w-full justify-evenly px-2 sm:px-32 md:w-3/4 ">
       <div className="flex items-center">
@@ -61,8 +65,8 @@ export const Header = () => {
               <Tooltip.Trigger asChild>
                 <div className="rounded-full">
                   {"0x...." +
-                    address
-                      ?.slice(address.length - 5, address.length)
+                    account
+                      ?.slice(account.length - 5, account.length)
                       .toString()}
                 </div>
               </Tooltip.Trigger>
@@ -71,7 +75,7 @@ export const Header = () => {
                   className="select-none rounded-[4px] bg-slate-800/70 px-[15px] py-[10px] text-[15px]  leading-none text-white will-change-[transform,opacity] data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade  data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade"
                   sideOffset={5}
                 >
-                  <div>{address}</div>
+                  <div>{account}</div>
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>

@@ -1,8 +1,10 @@
 "use client";
-import { MetaMaskButton, useAccount } from "@metamask/sdk-react-ui";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { useEffect, useState } from "react";
+import { MetaMaskButton, useAccount, useSDK } from "@metamask/sdk-react-ui";
+import { ExclamationTriangleIcon, CircleIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { interHeading } from "./fonts/fonts";
+import { Bars, TailSpin } from "react-loader-spinner";
 
 interface MetaMaskConnectProps {
   children: React.ReactNode;
@@ -11,10 +13,13 @@ interface MetaMaskConnectProps {
 export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
   children,
 }) => {
-  const { isConnected } = useAccount();
+  const { connected, connecting } = useSDK();
+  useEffect(() => {
+    console.table(connected, connecting);
+  }, [connected, connecting]);
   return (
     <>
-      {isConnected ? (
+      {connected ? (
         children
       ) : (
         <div className="fixed inset-0 z-10 backdrop-blur-sm">
