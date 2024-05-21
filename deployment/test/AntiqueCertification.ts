@@ -6,6 +6,7 @@ import { AntiqueCertification } from "../typechain-types";
 const CERTIFICATION_BODY_WALLET =
   "0xfb172542b405d0685bd29c3f4386159e76d9330b".toLowerCase();
 
+
 describe("AntiqueCertification", function () {
   it("Constructor", async function () {
     if (!ethers.isAddress(CERTIFICATION_BODY_WALLET)) {
@@ -14,6 +15,7 @@ describe("AntiqueCertification", function () {
       );
       process.exit(1);
     }
+
 
     // deploy an AntiqueCertification contract with this wallet address and check the address stored on the contract
     const antiqueCertification = await hre.ethers.deployContract(
