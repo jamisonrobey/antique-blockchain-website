@@ -1,8 +1,5 @@
-import {
-  MagnifyingGlassIcon,
-  PaperPlaneIcon,
-  UpdateIcon,
-} from "@radix-ui/react-icons";
+"use client";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { Selector } from "./Selector";
 import { useState, useEffect } from "react";
 import {
@@ -11,7 +8,11 @@ import {
   availabilitySelectorOptions,
 } from "@/types/types";
 import { Results } from "../Results/Results";
-export const Search = () => {
+import { Item } from "@/types/types";
+interface SearchProps {
+  initialResults: Item[];
+}
+export const Search: React.FC<SearchProps> = ({ initialResults }) => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedCirca, setSelectedCirca] = useState("all");
   const [selectedAvailability, setSelectedAvailability] = useState("all");
@@ -56,7 +57,7 @@ export const Search = () => {
         </button>
       </div>
       <div className="my-8 w-full border-b-2 border-slate-200"></div>
-      <Results />
+      <Results initialResults={initialResults} />
     </div>
   );
 };

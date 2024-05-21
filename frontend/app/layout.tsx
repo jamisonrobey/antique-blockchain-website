@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Provider } from "@/components/Provider";
 import "./globals.css";
-
-export const interText = Inter({ weight: "400", subsets: ["latin"] });
-export const interHeading = Inter({ weight: "700", subsets: ["latin"] });
+import { interText } from "@/components/fonts/fonts";
 const metadata: Metadata = {
   title: "AntiqueChain",
 };
@@ -18,7 +18,13 @@ export default function RootLayout({
       <body
         className={`${interText.className} mx-auto  grid place-items-center bg-white`}
       >
-        {children}
+        <Provider>
+          <Header />
+          <div className="w-full border-b-2 border-slate-200"></div>
+          {children}
+          <div className="w-full border-t-2 border-slate-200"></div>
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

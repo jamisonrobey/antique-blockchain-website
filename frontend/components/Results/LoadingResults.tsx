@@ -1,5 +1,5 @@
 import { CircleIcon, ImageIcon } from "@radix-ui/react-icons";
-import { interHeading } from "@/app/layout";
+import { interHeading } from "../fonts/fonts";
 import React from "react";
 
 interface LoadingResultsProps {

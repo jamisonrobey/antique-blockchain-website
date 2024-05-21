@@ -1,4 +1,5 @@
-import { interHeading } from "@/app/layout";
+"use client";
+import { interHeading } from "./fonts/fonts";
 import { useSDK } from "@metamask/sdk-react";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -90,11 +91,11 @@ export const Header = () => {
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content
-              className="flex flex-col  items-start bg-white p-4  will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
+              className="justify-centre flex  flex-col items-start border-2 border-slate-200 bg-white will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
               sideOffset={5}
             >
-              <DropdownMenu.Item className="text-violet11 data-[disabled]:text-mauve8 data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1 group relative flex h-[25px] select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none">
-                <div className="text-mauve11 group-data-[disabled]:text-mauve8 ml-auto group-data-[highlighted]:text-blue-500">
+              <DropdownMenu.Item className="relative flex h-[25px] w-full flex-grow select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none">
+                <div className="ml-auto text-slate-800">
                   <Link
                     href=""
                     className="text-lg duration-150 hover:text-blue-500"
@@ -103,8 +104,8 @@ export const Header = () => {
                   </Link>
                 </div>
               </DropdownMenu.Item>
-              <DropdownMenu.Item className="text-violet11 data-[disabled]:text-mauve8 data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1 group relative flex h-[25px] select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none">
-                <div className="text-mauve11 group-data-[disabled]:text-mauve8 ml-auto group-data-[highlighted]:text-blue-500">
+              <DropdownMenu.Item className="relative flex h-[25px] select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none">
+                <div className="ml-auto text-slate-800">
                   <Link
                     href=""
                     className="text-lg duration-150 hover:text-blue-500"
@@ -113,8 +114,8 @@ export const Header = () => {
                   </Link>
                 </div>
               </DropdownMenu.Item>
-              <DropdownMenu.Item className="text-violet11 data-[disabled]:text-mauve8 data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1 group relative flex h-[25px] select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none">
-                <div className="text-mauve11 group-data-[disabled]:text-mauve8 ml-auto group-data-[highlighted]:text-blue-500">
+              <DropdownMenu.Item className="group relative flex h-[25px] select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none">
+                <div className="ml-auto text-slate-800">
                   <Link
                     href=""
                     className="text-lg duration-150 hover:text-blue-500"

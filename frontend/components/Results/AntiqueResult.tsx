@@ -1,6 +1,6 @@
 import { Item } from "@/types/types";
 import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
-import { interHeading } from "@/app/layout";
+import { interHeading } from "../fonts/fonts";
 interface AntiqueResultProps {
   item: Item;
 }
