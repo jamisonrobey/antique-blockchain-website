@@ -1,17 +1,13 @@
 "use client";
 import { interHeading } from "./fonts/fonts";
-import { useSDK } from "@metamask/sdk-react-ui";
+import { useSDK, useAccount, useDisconnect } from "@metamask/sdk-react-ui";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 export const Header = () => {
-  const { account, sdk } = useSDK();
-  const disconnect = async () => {
-    if (sdk) {
-      sdk.terminate();
-    }
-  };
+  const { isConnected, address } = useAccount();
+  const { disconnect } = useDisconnect();
   return (
     <div className="my-4 flex w-full justify-evenly px-2 sm:px-32 md:w-3/4 ">
       <div className="flex items-center">
@@ -45,6 +41,7 @@ export const Header = () => {
             <Tooltip.Root>
               <Tooltip.Trigger asChild>
                 <button
+                  // @ts-ignore
                   onClick={disconnect}
                   className="h-4 w-4 rounded-full bg-green-500 duration-100 hover:bg-red-500"
                 ></button>
@@ -64,8 +61,8 @@ export const Header = () => {
               <Tooltip.Trigger asChild>
                 <div className="rounded-full">
                   {"0x...." +
-                    account
-                      ?.slice(account.length - 5, account.length)
+                    address
+                      ?.slice(address.length - 5, address.length)
                       .toString()}
                 </div>
               </Tooltip.Trigger>
@@ -74,7 +71,7 @@ export const Header = () => {
                   className="select-none rounded-[4px] bg-slate-800/70 px-[15px] py-[10px] text-[15px]  leading-none text-white will-change-[transform,opacity] data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade  data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade"
                   sideOffset={5}
                 >
-                  <div>{account}</div>
+                  <div>{address}</div>
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>
