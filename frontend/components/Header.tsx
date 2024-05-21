@@ -1,6 +1,6 @@
 "use client";
 import { interHeading } from "./fonts/fonts";
-import { useSDK } from "@metamask/sdk-react";
+import { useSDK } from "@metamask/sdk-react-ui";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
