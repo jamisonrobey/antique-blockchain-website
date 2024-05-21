@@ -7,8 +7,8 @@ contract AntiqueCertification is Utils {
     address public antiqueCertificationBody;
     Antique[] public antiques;
 
-    constructor(address _antiqueCertificationBody) {
-        antiqueCertificationBody = _antiqueCertificationBody; // *! this is local ganache wallet - replace with actual deployment
+    constructor() {
+        antiqueCertificationBody = msg.sender;
     }
 
     modifier onlyOwner() {
