@@ -20,7 +20,7 @@ export const Results: React.FC<ResultsProps> = ({ initialResults }) => {
   };
 
   return (
-    <div className="grid h-[100vh] w-full grid-cols-3 place-items-center gap-2 overflow-scroll rounded-2xl ">
+    <div className="no-scrollbar grid w-full grid-cols-[repeat(auto-fit,_minmax(400,_1fr))] gap-2 overflow-scroll rounded-2xl">
       {loading ? (
         <LoadingResults number={15} />
       ) : (
