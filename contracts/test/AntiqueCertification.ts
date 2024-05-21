@@ -4,7 +4,7 @@ import hre from "hardhat";
 describe("AntiqueCertification", function () {
   it("Constructor", async function () {
     const antiqueCertificationBodyWalletAddr =
-      "0xfb172542b405d0685bd29c3f4386159e76d9330b".toLowerCase();
+      "0xfb172542b405d0685bd29c3f4386159e76d9330b".toLowerCase(); // EVENTUALLY REPLACE WITH ACTUALLY DEPLOYED ADDRESS ON SEPOLIA
 
     // deploy an AntiqueCertification contract with this wallet address and check the address stored on the contract
     const antiqueCertification = await hre.ethers.deployContract(
