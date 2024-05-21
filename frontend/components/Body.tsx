@@ -28,7 +28,7 @@ export const Body: React.FC<BodyProps> = ({ initialResults }) => {
   return (
     <>
       {account ? (
-        <div className="flex h-[80vh] w-full items-center justify-center border-x-2 border-slate-200 px-2 sm:w-3/4 sm:px-0">
+        <div className="flex w-full items-center border-x-2 border-slate-200 px-2 sm:w-3/4 sm:px-0">
           <Search initialResults={initialResults} />
         </div>
       ) : (
