@@ -1,26 +1,9 @@
 import { ethers } from "ethers";
-const contractAddress = "0xd4a888483bbd5a3c5cb6a9bd713ef08168b7ec58";
+const contractAddress = "0x52306d85E087910d985e9dC79F54003d3af2Fd18";
 const ABI = [
   {
-    inputs: [
-      {
-        internalType: "string[]",
-        name: "_test",
-        type: "string[]",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "test",
+    inputs: [],
+    name: "testString",
     outputs: [
       {
         internalType: "string",
@@ -32,6 +15,7 @@ const ABI = [
     type: "function",
   },
 ];
+
 export default async function Search({
   searchParams,
 }: {
@@ -42,10 +26,10 @@ export default async function Search({
       fetchOptions: {
         referrer: "https:localhost:3000",
       },
-      url: "https://sepolia.infura.io/v3/e92a7d24a42941179f92d65e108f0def",
+      url: "http://localhost:7545",
     });
     const contract = new ethers.Contract(contractAddress, ABI, provider);
-    const result = await contract.test(1);
+    const result = await contract.testString();
     console.log(result);
   } catch (err) {
     console.warn(err);
