@@ -21,4 +21,5 @@ frontend/*.sw?
 # solidity artifacts
 **/artifacts/
 
-deployment/ignition/deployments/chain-1337
+hardhat/ignition/deployments/**
+**/.env.local

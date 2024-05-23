@@ -1,6 +1,6 @@
 "use client";
 import { interHeading } from "./fonts/fonts";
-import { useSDK } from "@metamask/sdk-react-ui";
+import { useSDK, useAccount, useDisconnect } from "@metamask/sdk-react-ui";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -45,6 +45,7 @@ export const Header = () => {
             <Tooltip.Root>
               <Tooltip.Trigger asChild>
                 <button
+                  // @ts-ignore
                   onClick={disconnect}
                   className="h-4 w-4 rounded-full bg-green-500 duration-100 hover:bg-red-500"
                 ></button>
