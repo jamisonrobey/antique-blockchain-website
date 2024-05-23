@@ -4,7 +4,6 @@ import { MetaMaskButton, useAccount, useSDK } from "@metamask/sdk-react-ui";
 import { ExclamationTriangleIcon, CircleIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { interHeading } from "./fonts/fonts";
-import { Bars, TailSpin } from "react-loader-spinner";
 
 interface MetaMaskConnectProps {
   children: React.ReactNode;
