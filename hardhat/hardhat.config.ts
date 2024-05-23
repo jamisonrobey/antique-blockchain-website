@@ -10,11 +10,12 @@ const config: HardhatUserConfig = {
     ganache: {
       url: "http://localhost:7545",
     },
+    /*
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       // @ts-ignore
       accounts: [SEPOLIA_PRIVATE_KEY],
-    },
+    },*/
   },
 };
 export default config;
