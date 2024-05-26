@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 import { AntiqueCertification } from "../typechain-types";
 
 const CERTIFICATION_BODY_WALLET =
-  "0xfb172542b405d0685bd29c3f4386159e76d9330b".toLowerCase();
+ "0x29F9146174aAEd443eEc9cC3F43aAc190C29f9F4".toLowerCase();
 
 
 describe("AntiqueCertification", function () {
@@ -20,7 +20,6 @@ describe("AntiqueCertification", function () {
     // deploy an AntiqueCertification contract with this wallet address and check the address stored on the contract
     const antiqueCertification = await hre.ethers.deployContract(
       "AntiqueCertification",
-      [CERTIFICATION_BODY_WALLET]
     );
 
     // test

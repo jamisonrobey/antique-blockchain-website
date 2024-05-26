@@ -1,13 +1,6 @@
 "use client";
 import { Selector } from "@/components/selector/Selector";
-import {
-  useAccount,
-  useSDK,
-  useSignMessage,
-  useConnect,
-  useContractWrite,
-} from "@metamask/sdk-react-ui";
-import { SelectorsState } from "@/types/types";
+import { useAccount, useSDK, useSignMessage } from "@metamask/sdk-react-ui";
 import { UploadIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { ethers } from "ethers";
 import { useState } from "react";
@@ -18,7 +11,16 @@ import {
   CERTIIFCATION_ABI,
 } from "@/types/types";
 import { ToastContainer, toast } from "react-toastify";
-import { categorySelectorItems, circaSelectorItems, availabilitySelectorOptions } from "@/types/types";
+
+const categorySelectorItems = [
+  "furniture",
+  "pottery",
+  "glassware",
+  "collectables",
+];
+const circaSelectorItems = ["Pre-1700s", "1700s", "1800s", "1900s", "2000s"];
+const availabilitySelectorOptions = ["available", "unavailable"];
+
 export default function Admin() {
   const { connected, account, sdk } = useSDK();
   const { isConnected } = useAccount();
@@ -31,10 +33,11 @@ export default function Admin() {
     signMessage,
   } = useSignMessage();
   const [name, setName] = useState<string>("");
+  const [ownerAddress, setOwnerAddress] = useState("");
   const [image, setImage] = useState<string | undefined>();
-    const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedCirca, setSelectedCirca] = useState("all");
-  const [selectedAvailability, setSelectedAvailability] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("furniture");
+  const [selectedCirca, setSelectedCirca] = useState("pre-1700s");
+  const [selectedAvailability, setSelectedAvailability] = useState("available");
 
   const fetchNonce = async () => {
     const response = await fetch("/api/admin/");
@@ -52,6 +55,11 @@ export default function Admin() {
     event.preventDefault();
     if (name == "") {
       toast.error("Missing antique name");
+      return;
+    }
+
+    if (ownerAddress == "" || !ethers.utils.isAddress(ownerAddress)) {
+      toast.error("Invalid address");
       return;
     }
 
@@ -114,16 +122,26 @@ export default function Admin() {
         provider.getSigner(),
       );
 
-      const tx = await antiqueCertificationContract.addAntique(name, selectedCategory, selectedCirca, account, selectedAvailability);
+      const tx = await antiqueCertificationContract.addAntique(
+        name,
+        selectedCategory,
+        selectedCirca,
+        ownerAddress,
+        selectedAvailability,
+      );
       await tx.wait();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Something went wrong (client side)");
     }
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+  };
+
+  const handleOwnerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOwnerAddress(e.target.value);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +156,7 @@ export default function Admin() {
     reader.readAsDataURL(file);
   };
 
-    const handleCategoryChange = (value: string) => {
+  const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
   };
 
@@ -187,30 +205,38 @@ export default function Admin() {
             </h2>
 
             <input
-              id="antiqueName"
               onChange={handleNameChange}
               className="text col-span-2 rounded-lg border-2 border-slate-200 p-2 duration-100 hover:border-blue-500 focus:outline-blue-500"
               placeholder="Item name"
               type="text"
             />
-                    <Selector
-          items={categorySelectorItems}
-          type="Category"
-          value={selectedCategory}
-          onValueChange={handleCategoryChange}
-        />
-        <Selector
-          items={circaSelectorItems}
-          type="Circa"
-          value={selectedCirca}
-          onValueChange={handleCircaChange}
-        />
-        <Selector
-          items={availabilitySelectorOptions}
-          type="Availability"
-          value={selectedAvailability}
-          onValueChange={handleAvailabilityChange}
-        />
+
+            <input
+              onChange={handleOwnerChange}
+              className="text col-span-2 rounded-lg border-2 border-slate-200 p-2 duration-100 hover:border-blue-500 focus:outline-blue-500"
+              placeholder="Owner address"
+              type="text"
+            />
+
+            <Selector
+              items={categorySelectorItems}
+              type="Category"
+              value={selectedCategory}
+              onValueChange={handleCategoryChange}
+            />
+            <Selector
+              items={circaSelectorItems}
+              type="Circa"
+              value={selectedCirca}
+              onValueChange={handleCircaChange}
+            />
+            <Selector
+              items={availabilitySelectorOptions}
+              type="Availability"
+              value={selectedAvailability}
+              onValueChange={handleAvailabilityChange}
+            />
+
             <input
               type="file"
               className="col-span-2 rounded-lg border-2 border-slate-200 px-2 py-4"

@@ -24,7 +24,8 @@ contract AntiqueCertification is Utils {
         string memory categoryStr,
         string memory periodStr,
         address antiqueOwner,
-        bool availability
+        bool availability,
+        string memory image
     ) public onlyOwner {
         Category category = stringToCategory(categoryStr);
         Period period = stringToPeriod(periodStr);
@@ -35,7 +36,8 @@ contract AntiqueCertification is Utils {
                 category,
                 period,
                 antiqueOwner,
-                availability
+                availability,
+                image
             )
         );
     }

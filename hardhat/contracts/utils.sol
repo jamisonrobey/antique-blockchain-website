@@ -26,6 +26,7 @@ struct Antique {
     Period period;
     address owner;
     bool available;
+    string image;
 }
 
 contract Utils {
