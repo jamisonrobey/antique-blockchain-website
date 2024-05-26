@@ -1,13 +1,26 @@
-# Sample Hardhat Project
+# Hardhat
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+This is the hardhat project used to develop our smart contracts.
 
-Try running some of the following tasks:
+You can find the contract code under `contracts/`
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
-```
+## Setup
+
+Clone this repository and then install the packages in this directory:
+ - `cd hardhat`
+ - `npm install`
+
+## Running
+
+To run the tests locally:
+ - `npx hardhat test`
+ - This runs all tests on local hardhat network
+
+To deploy contract to local Hardhat network outside of testing
+ -` npx hardhat node`
+ - `npx hardhat ignition deploy ./ignition/modules/AntiqueCertification.ts --network localhost`
+
+To deploy to Sepolia
+ - Email Jamison Robey for API keys (these aren't used so I don't mind sharing to QUT staff)
+ - create environment variables `SEPOLIA_PRIVATE_KEY` `INFURA_API_KEY`
+ -  - `npx hardhat ignition deploy ./ignition/modules/AntiqueCertification.ts --network sepolia`
