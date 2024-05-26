@@ -8,7 +8,7 @@ contract AntiqueCertification is Utils {
     Antique[] public antiques;
 
     constructor() {
-        antiqueCertificationBody = msg.sender;
+        antiqueCertificationBody = 0x29F9146174aAEd443eEc9cC3F43aAc190C29f9F4;
     }
 
     modifier onlyOwner() {
