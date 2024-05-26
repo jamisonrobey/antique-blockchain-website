@@ -4,8 +4,15 @@ This is the hardhat project used to develop our smart contracts.
 
 You can find the contract code under `contracts/`
 
-To run the tests locally:
+## Setup
+
+Clone this repository and then install the packages in this directory:
+ - `cd hardhat`
  - `npm install`
+
+## Running
+
+To run the tests locally:
  - `npx hardhat test`
  - This runs all tests on local hardhat network
 
