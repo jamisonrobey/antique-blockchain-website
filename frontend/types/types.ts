@@ -31,8 +31,160 @@ export interface PaginatedItemsResponse {
 }
 
 export const CERTIFICATION_WALLET = "0x29F9146174aAEd443eEc9cC3F43aAc190C29f9F4".toLowerCase();
-export const CERTIFICATION_CONTRACT = "";
-export const CERTIIFCATION_ABI = [];
+export const CERTIFICATION_CONTRACT = "0x9e5Ea6267df177b0A7Bec21ef9176F7890c76DD2";
+export const CERTIIFCATION_ABI = [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "categoryStr",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "periodStr",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "antiqueOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "availability",
+          "type": "bool"
+        }
+      ],
+      "name": "addAntique",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "antiqueCertificationBody",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "antiques",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "enum Category",
+          "name": "category",
+          "type": "uint8"
+        },
+        {
+          "internalType": "enum Period",
+          "name": "period",
+          "type": "uint8"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "available",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "numAntiques",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "categoryStr",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "periodStr",
+          "type": "string"
+        },
+        {
+          "internalType": "bool",
+          "name": "available",
+          "type": "bool"
+        }
+      ],
+      "name": "getAntiques",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "enum Category",
+              "name": "category",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum Period",
+              "name": "period",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "available",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct Antique[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
 
 export interface SelectorsState {
   selectedCategory: string;

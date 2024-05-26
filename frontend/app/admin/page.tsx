@@ -79,7 +79,7 @@ export default function Admin() {
         return;
       }
 
-      if (data.status === 401 || data.status(403)) {
+      if (data.status === 401 || data.status == 403) {
         toast.error("Nonce error, try refreshing and signing new message");
         return;
       }
@@ -115,7 +115,11 @@ export default function Admin() {
         CERTIIFCATION_ABI,
         provider.getSigner(),
       );
+
+      const tx = await antiqueCertificationContract.addAntique(name, selectors.selectedCategory, selectors.selectedCirca, account, selectors.selectedAvailability);
+      await tx.wait();
     } catch (error) {
+      console.log(error)
       toast.error("Something went wrong (client side)");
     }
   };

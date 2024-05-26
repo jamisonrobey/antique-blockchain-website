@@ -11,7 +11,13 @@ const config: HardhatUserConfig = {
       // deploy to ganache network on 7545
       url: "http://localhost:7545",
     },
-
+    // use hardhat in metamask browser
+   hardhat: {
+      accounts: {
+        mnemonic: process.env.SEED_PHRASE?.trim(),
+      },
+      chainId: 1337,
+    },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       // @ts-ignore
