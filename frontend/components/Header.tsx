@@ -1,10 +1,11 @@
 "use client";
 import { interHeading } from "./fonts/fonts";
-import { useSDK, useAccount, useDisconnect } from "@metamask/sdk-react-ui";
+import { useSDK, useAccount, useDisconnect, MetaMaskButton } from "@metamask/sdk-react-ui";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { CERTIFICATION_WALLET } from "@/types/types";
 export const Header = () => {
   const { account, sdk } = useSDK();
   const disconnect = async () => {
@@ -60,26 +61,7 @@ export const Header = () => {
               </Tooltip.Portal>
             </Tooltip.Root>
           </Tooltip.Provider>
-          <Tooltip.Provider>
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <div className="rounded-full">
-                  {"0x...." +
-                    account
-                      ?.slice(account.length - 5, account.length)
-                      .toString()}
-                </div>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  className="select-none rounded-[4px] bg-slate-800/70 px-[15px] py-[10px] text-[15px]  leading-none text-white will-change-[transform,opacity] data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade  data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade"
-                  sideOffset={5}
-                >
-                  <div>{account}</div>
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </Tooltip.Provider>
+          <MetaMaskButton color="white" theme="light"></MetaMaskButton>
         </span>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="" asChild>
@@ -105,10 +87,10 @@ export const Header = () => {
                   </Link>
                 </div>
               </DropdownMenu.Item>
-              <DropdownMenu.Item className="relative flex h-[25px] select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none">
+              <DropdownMenu.Item className={` ${account === CERTIFICATION_WALLET ? "visible" : "hidden"} relative flex h-[25px] select-none items-center rounded-[3px] px-[5px] pl-[25px] text-[13px] leading-none outline-none data-[disabled]:pointer-events-none`}>
                 <div className="ml-auto text-slate-800">
                   <Link
-                    href=""
+                    href="/admin"
                     className="text-lg duration-150 hover:text-blue-500"
                   >
                     Admin

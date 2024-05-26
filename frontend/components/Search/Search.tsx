@@ -1,6 +1,6 @@
 "use client";
 import { UpdateIcon } from "@radix-ui/react-icons";
-import { Selector } from "./Selector";
+import { Selector } from "../selector/Selector";
 import { useState, useEffect } from "react";
 import {
   categorySelectorItems,

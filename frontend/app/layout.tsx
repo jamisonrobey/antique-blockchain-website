@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Provider } from "@/components/Provider";
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { interText } from "@/components/fonts/fonts";
 const metadata: Metadata = {
   title: "AntiqueChain",
