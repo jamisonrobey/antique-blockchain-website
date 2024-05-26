@@ -1,4 +1,5 @@
 "use client";
+import { Selector } from "@/components/selector/Selector";
 import {
   useAccount,
   useSDK,
@@ -17,8 +18,7 @@ import {
   CERTIIFCATION_ABI,
 } from "@/types/types";
 import { ToastContainer, toast } from "react-toastify";
-import { AntiqueSelector } from "@/components/selector/AntiqueSelector";
-
+import { categorySelectorItems, circaSelectorItems, availabilitySelectorOptions } from "@/types/types";
 export default function Admin() {
   const { connected, account, sdk } = useSDK();
   const { isConnected } = useAccount();
@@ -32,11 +32,9 @@ export default function Admin() {
   } = useSignMessage();
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState<string | undefined>();
-  const [selectors, setSelectors] = useState<SelectorsState>({
-    selectedCategory: "all",
-    selectedCirca: "all",
-    selectedAvailability: "all",
-  });
+    const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCirca, setSelectedCirca] = useState("all");
+  const [selectedAvailability, setSelectedAvailability] = useState("all");
 
   const fetchNonce = async () => {
     const response = await fetch("/api/admin/");
@@ -116,7 +114,7 @@ export default function Admin() {
         provider.getSigner(),
       );
 
-      const tx = await antiqueCertificationContract.addAntique(name, selectors.selectedCategory, selectors.selectedCirca, account, selectors.selectedAvailability);
+      const tx = await antiqueCertificationContract.addAntique(name, selectedCategory, selectedCirca, account, selectedAvailability);
       await tx.wait();
     } catch (error) {
       console.log(error)
@@ -127,6 +125,7 @@ export default function Admin() {
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -139,8 +138,16 @@ export default function Admin() {
     reader.readAsDataURL(file);
   };
 
-  const handleSelectorsChange = (newSelectors: SelectorsState) => {
-    setSelectors(newSelectors);
+    const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+  };
+
+  const handleCircaChange = (value: string) => {
+    setSelectedCirca(value);
+  };
+
+  const handleAvailabilityChange = (value: string) => {
+    setSelectedAvailability(value);
   };
 
   return account === CERTIFICATION_WALLET && connected ? (
@@ -178,6 +185,7 @@ export default function Admin() {
             <h2 className="200 col-span-2 border-b-2 border-slate-200 text-2xl ">
               Antique Submission
             </h2>
+
             <input
               id="antiqueName"
               onChange={handleNameChange}
@@ -185,7 +193,24 @@ export default function Admin() {
               placeholder="Item name"
               type="text"
             />
-            <AntiqueSelector onSelectorsChange={handleSelectorsChange} />
+                    <Selector
+          items={categorySelectorItems}
+          type="Category"
+          value={selectedCategory}
+          onValueChange={handleCategoryChange}
+        />
+        <Selector
+          items={circaSelectorItems}
+          type="Circa"
+          value={selectedCirca}
+          onValueChange={handleCircaChange}
+        />
+        <Selector
+          items={availabilitySelectorOptions}
+          type="Availability"
+          value={selectedAvailability}
+          onValueChange={handleAvailabilityChange}
+        />
             <input
               type="file"
               className="col-span-2 rounded-lg border-2 border-slate-200 px-2 py-4"

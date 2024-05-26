@@ -1,13 +1,13 @@
 "use client";
 import { UpdateIcon } from "@radix-ui/react-icons";
-import { Selector } from "../selector/Selector";
 import { useState, useEffect } from "react";
+import { Selector } from "./selector/Selector";
 import {
   categorySelectorItems,
   circaSelectorItems,
   availabilitySelectorOptions,
 } from "@/types/types";
-import { Results } from "../Results/Results";
+import {Results} from "@/components/Results/Results"
 import { Item } from "@/types/types";
 interface SearchProps {
   initialResults: Item[];
