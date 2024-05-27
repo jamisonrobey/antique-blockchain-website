@@ -7,8 +7,8 @@ contract AntiqueCertification is Utils {
     address public antiqueCertificationBody;
     Antique[] public antiques;
 
-    constructor() {
-        antiqueCertificationBody = 0x29F9146174aAEd443eEc9cC3F43aAc190C29f9F4;
+    constructor(address _antiqueCertificationBody) {
+        antiqueCertificationBody = _antiqueCertificationBody;
     }
 
     modifier onlyOwner() {
