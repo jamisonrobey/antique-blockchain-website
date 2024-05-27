@@ -22,6 +22,7 @@ enum Period {
 struct Antique {
     uint256 id;
     string name;
+    string description;
     Category category;
     Period period;
     address owner;

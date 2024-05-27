@@ -1,11 +1,30 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+struct AntiqueObject {
+    uint256 id;
+    string name;
+    string description;
+    string category;
+    string period;
+    address owner;
+    bool available;
+    string image;
+}
+
+pragma solidity 0.8.18;
 
 import "./utils.sol";
 
 contract AntiqueCertification is Utils {
     address public antiqueCertificationBody;
     Antique[] public antiques;
+
+    event AntiqueAdded(
+        uint256 indexed id,
+        string name,
+        string category,
+        string period
+    );
+    event AntiquesFetched(AntiqueObject[] antiques);
 
     constructor() {
         antiqueCertificationBody = msg.sender;
@@ -21,6 +40,7 @@ contract AntiqueCertification is Utils {
 
     function addAntique(
         string memory name,
+        string memory description,
         string memory categoryStr,
         string memory periodStr,
         address antiqueOwner,
@@ -34,6 +54,7 @@ contract AntiqueCertification is Utils {
             Antique(
                 id,
                 name,
+                description,
                 category,
                 period,
                 antiqueOwner,
@@ -41,6 +62,24 @@ contract AntiqueCertification is Utils {
                 image
             )
         );
+        emit AntiqueAdded(id, name, categoryStr, periodStr);
+    }
+
+    function getAntiqueById(
+        uint256 id
+    ) external view returns (AntiqueObject memory) {
+        require(id < antiques.length && id >= 0, "Invalid ID");
+        return
+            AntiqueObject({
+                id: id,
+                name: antiques[id].name,
+                description: antiques[id].description,
+                category: categoryToString(antiques[id].category),
+                period: periodToString(antiques[id].period),
+                owner: antiques[id].owner,
+                available: antiques[id].available,
+                image: antiques[id].image
+            });
     }
 
     function getAntiques(
@@ -48,7 +87,7 @@ contract AntiqueCertification is Utils {
         string memory categoryStr,
         string memory periodStr,
         bool available
-    ) external view returns (Antique[] memory) {
+    ) external view returns (AntiqueObject[] memory) {
         require(antiques.length > 0, "There are no antiques stored");
 
         /* Handle special all keyword */
@@ -95,17 +134,25 @@ contract AntiqueCertification is Utils {
             endIndex = matchedCount;
         }
 
-        /* Create a new array with the antiques for the requested page */
-        Antique[] memory paginatedAntiques = new Antique[](
+        AntiqueObject[] memory paginatedAntiquesObjects = new AntiqueObject[](
             endIndex - startIndex
         );
         uint256 paginatedCount = 0;
-
         for (uint256 i = startIndex; i < endIndex; i++) {
-            paginatedAntiques[paginatedCount] = matchedAntiques[i];
+            AntiqueObject memory antiqueObject = AntiqueObject({
+                id: matchedAntiques[i].id,
+                name: matchedAntiques[i].name,
+                description: matchedAntiques[i].description,
+                category: categoryToString(matchedAntiques[i].category),
+                period: periodToString(matchedAntiques[i].period),
+                owner: matchedAntiques[i].owner,
+                available: matchedAntiques[i].available,
+                image: matchedAntiques[i].image
+            });
+            paginatedAntiquesObjects[paginatedCount] = antiqueObject;
             paginatedCount++;
         }
 
-        return paginatedAntiques;
+        return paginatedAntiquesObjects;
     }
 }

@@ -5,10 +5,11 @@ import { UploadIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { ethers } from "ethers";
 import { useState } from "react";
 import { interHeading } from "@/components/fonts/fonts";
+import { CERTIFICATION_ABI_DEV, CERTIFICATION_ABI_PROD } from "@/types/ABI";
 import {
   CERTIFICATION_WALLET,
-  CERTIFICATION_CONTRACT,
-  CERTIIFCATION_ABI,
+  CERTIFICATION_CONTRACT_PROD,
+  CERTIFICATION_CONTRACT_DEV,
 } from "@/types/types";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -18,7 +19,7 @@ const categorySelectorItems = [
   "glassware",
   "collectables",
 ];
-const circaSelectorItems = ["Pre-1700s", "1700s", "1800s", "1900s", "2000s"];
+const circaSelectorItems = ["Pre1700s", "1700s", "1800s", "1900s", "2000s"];
 const availabilitySelectorOptions = ["available", "unavailable"];
 
 export default function Admin() {
@@ -33,10 +34,11 @@ export default function Admin() {
     signMessage,
   } = useSignMessage();
   const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState("");
   const [ownerAddress, setOwnerAddress] = useState("");
   const [image, setImage] = useState<string | undefined>();
   const [selectedCategory, setSelectedCategory] = useState("furniture");
-  const [selectedCirca, setSelectedCirca] = useState("pre-1700s");
+  const [selectedCirca, setSelectedCirca] = useState("pre1700s");
   const [selectedAvailability, setSelectedAvailability] = useState("available");
 
   const fetchNonce = async () => {
@@ -53,8 +55,19 @@ export default function Admin() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    console.log("trying to send", selectedCategory);
     if (name == "") {
       toast.error("Missing antique name");
+      return;
+    }
+
+    if (description == "") {
+      toast.error("Missing description");
+      return;
+    }
+
+    if (description.length > 200) {
+      toast.error("Description must be less than 200 characters");
       return;
     }
 
@@ -92,14 +105,14 @@ export default function Admin() {
 
       if (data.status === 503) {
         toast.error(
-          "Interal server error (You are missing environment variables",
+          "Internal server error (You are missing environment variables",
         );
         return;
       }
 
       if (data.status !== 200) {
         toast.error(
-          "Somthing went wrong with image upload, and we couldn't add the antique",
+          "Something went wrong with image upload, and we couldn't add the antique",
         );
 
         return;
@@ -117,17 +130,21 @@ export default function Admin() {
       // @ts-ignore
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const antiqueCertificationContract = new ethers.Contract(
-        CERTIFICATION_CONTRACT,
-        CERTIIFCATION_ABI,
+        CERTIFICATION_CONTRACT_DEV,
+        CERTIFICATION_ABI_DEV,
         provider.getSigner(),
       );
 
+      const imgUrl = data.data.Location;
+
       const tx = await antiqueCertificationContract.addAntique(
         name,
+        description,
         selectedCategory,
         selectedCirca,
         ownerAddress,
         selectedAvailability,
+        imgUrl,
       );
       await tx.wait();
     } catch (error) {
@@ -138,6 +155,12 @@ export default function Admin() {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setDescription(e.target.value);
   };
 
   const handleOwnerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,7 +194,7 @@ export default function Admin() {
   return account === CERTIFICATION_WALLET && connected ? (
     <>
       <ToastContainer position="top-right" />
-      <div className=" my-8 grid h-[60dvh] w-3/4 grid-cols-2 place-items-center justify-center  text-slate-800">
+      <div className=" my-8 grid w-3/4 grid-cols-2 place-items-center justify-center  text-slate-800">
         <h1 className={`${interHeading.className} col-span-2 text-3xl`}>
           Admin page
         </h1>
@@ -209,6 +232,11 @@ export default function Admin() {
               className="text col-span-2 rounded-lg border-2 border-slate-200 p-2 duration-100 hover:border-blue-500 focus:outline-blue-500"
               placeholder="Item name"
               type="text"
+            />
+            <p>Description</p>
+            <textarea
+              onChange={handleDescriptionChange}
+              className="col-span-2 resize-none border-2 border-slate-200 p-2 duration-100 hover:border-blue-500 focus:outline-blue-500"
             />
 
             <input

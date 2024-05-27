@@ -1,13 +1,13 @@
-import { Item } from "@/types/types";
 import { useEffect, useState } from "react";
+import { Antique } from "@/types/types";
 import { AntiqueResult } from "./AntiqueResult";
 import { LoadingResults } from "./LoadingResults";
 interface ResultsProps {
-  initialResults: Item[];
+  initialResults: Antique[];
 }
 export const Results: React.FC<ResultsProps> = ({ initialResults }) => {
   const [page, setPage] = useState(1);
-  const [results, setResults] = useState<Item[]>(initialResults);
+  const [results, setResults] = useState<Antique[]>(initialResults);
   const [loading, setLoading] = useState(false);
 
   const fetchData = () => {
@@ -25,7 +25,7 @@ export const Results: React.FC<ResultsProps> = ({ initialResults }) => {
         <LoadingResults number={15} />
       ) : (
         results.map((result) => (
-          <AntiqueResult item={result} key={result.name} />
+          <AntiqueResult antique={result} key={result.name} />
         ))
       )}
     </div>
