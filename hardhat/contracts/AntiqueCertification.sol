@@ -7,8 +7,8 @@ contract AntiqueCertification is Utils {
     address public antiqueCertificationBody;
     Antique[] public antiques;
 
-    constructor(address _antiqueCertificationBody) {
-        antiqueCertificationBody = _antiqueCertificationBody;
+    constructor() {
+        antiqueCertificationBody = msg.sender;
     }
 
     modifier onlyOwner() {
@@ -29,9 +29,10 @@ contract AntiqueCertification is Utils {
     ) public onlyOwner {
         Category category = stringToCategory(categoryStr);
         Period period = stringToPeriod(periodStr);
+        uint256 id = antiques.length; // Get the new id based on the current length of the antiques array
         antiques.push(
             Antique(
-                antiques.length,
+                id,
                 name,
                 category,
                 period,
