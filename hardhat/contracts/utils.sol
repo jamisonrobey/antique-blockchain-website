@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
     it is simply a contract that is inherited by AntiqueCreation and AntiqueInteraction contracts that provide helpful functions
 */
 
+// Enumeration for antique categories
 enum Category {
     Furniture,
     Pottery,
@@ -12,25 +13,29 @@ enum Category {
     Collectibles
 }
 
+// Enumeration for antique periods
 enum Period {
     Pre1700s,
     _1800s,
+    _1700s,
     _1900s,
     _2000s
 }
 
+// Representing antique objects
 struct Antique {
     uint256 id;
     string name;
+    string description;
     Category category;
     Period period;
     address owner;
     bool available;
+    string image;
 }
 
+// Contract providing helper functions for managing antique objects
 contract Utils {
-    // Existing functions...
-
     /* Handy toLower() implementation from: https://gist.github.com/ottodevs/c43d0a8b4b891ac2da675f825b1d1dbf?permalink_comment_id=4976821#gistcomment-4976821 */
     function copyBytes(
         bytes memory _bytes
@@ -100,6 +105,10 @@ contract Utils {
         ) return Period.Pre1700s;
         else if (
             keccak256(abi.encodePacked(lowerPeriod)) ==
+            keccak256(abi.encodePacked("1700s"))
+        ) return Period._1700s;
+        else if (
+            keccak256(abi.encodePacked(lowerPeriod)) ==
             keccak256(abi.encodePacked("1800s"))
         ) return Period._1800s;
         else if (
@@ -121,15 +130,35 @@ contract Utils {
         if (category == Category.Furniture) return "Furniture";
         else if (category == Category.Pottery) return "Pottery";
         else if (category == Category.Glassware) return "Glassware";
-        else return "Collectibles";
+        else return "Collectables";
     }
 
     function periodToString(
         Period period
     ) internal pure returns (string memory) {
         if (period == Period.Pre1700s) return "Pre1700s";
+        if (period == Period._1700s) return "1700s";
         if (period == Period._1800s) return "1800s";
         if (period == Period._1900s) return "1900s";
         else return "2000s";
+    }
+
+    function stringToAvailability(
+        string memory availability
+    ) internal pure returns (bool) {
+        string memory lowerAvailability = _toLowercase(availability);
+        if (
+            keccak256(abi.encodePacked(lowerAvailability)) ==
+            keccak256(abi.encodePacked("all"))
+        ) return true;
+        else if (
+            keccak256(abi.encodePacked(lowerAvailability)) ==
+            keccak256(abi.encodePacked("available"))
+        ) return true;
+        else if (
+            keccak256(abi.encodePacked(lowerAvailability)) ==
+            keccak256(abi.encodePacked("unavailable"))
+        ) return false;
+        else revert("Invalid availability");
     }
 }

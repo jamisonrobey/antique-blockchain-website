@@ -25,7 +25,9 @@ export const Selector: React.FC<SelectorProps> = ({
   };
   return (
     <div className="flex flex-col items-center ">
-      <p className="w-full p-1 text-left text-xs text-slate-400">{type}</p>
+      <p className="w-full p-1 text-left text-xs text-slate-400 sm:w-[120px]">
+        {type}
+      </p>
       <Select.Root onValueChange={handleValueChange}>
         <Select.Trigger
           className="inline-flex h-[35px] items-center justify-between gap-[5px] rounded border border-slate-200 bg-white px-[15px] text-[13px] leading-none text-slate-800 shadow-sm outline-none hover:bg-blue-500 hover:text-white focus:shadow-[0_0_0_2px] focus:shadow-blue-500 sm:w-[120px]"
@@ -44,7 +46,7 @@ export const Selector: React.FC<SelectorProps> = ({
             <Select.Viewport className="p-[5px]">
               <Select.Group>
                 <Select.Label className="px-[25px] text-xs leading-[25px] text-slate-800">
-                  Categories
+                  {type}
                 </Select.Label>
                 <Select.SelectSeparator className="mb-2 h-[1px] bg-slate-200" />
                 {items.map((item) => (

@@ -58,7 +58,6 @@ export async function POST(request: Request) {
 
   try {
     const data = await s3.upload(params).promise();
-    console.log(data);
     return NextResponse.json({ status: 200, message: "OK", data });
   } catch (error) {
     console.log(error);
