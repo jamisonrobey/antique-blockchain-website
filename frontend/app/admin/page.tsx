@@ -71,8 +71,8 @@ export default function Admin() {
       return;
     }
 
-    if (description.length > 200) {
-      toast.error("Description must be less than 200 characters");
+    if (description.length > 400) {
+      toast.error("Description must be less than 400 characters");
       return;
     }
 
@@ -151,7 +151,6 @@ export default function Admin() {
         selectedAvailability,
         imgUrl,
       );
-      await tx.wait();
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong (client side)");

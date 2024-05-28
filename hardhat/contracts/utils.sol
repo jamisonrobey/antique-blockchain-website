@@ -15,6 +15,7 @@ enum Category {
 enum Period {
     Pre1700s,
     _1800s,
+    _1700s,
     _1900s,
     _2000s
 }
@@ -102,6 +103,10 @@ contract Utils {
         ) return Period.Pre1700s;
         else if (
             keccak256(abi.encodePacked(lowerPeriod)) ==
+            keccak256(abi.encodePacked("1700s"))
+        ) return Period._1700s;
+        else if (
+            keccak256(abi.encodePacked(lowerPeriod)) ==
             keccak256(abi.encodePacked("1800s"))
         ) return Period._1800s;
         else if (
@@ -123,15 +128,35 @@ contract Utils {
         if (category == Category.Furniture) return "Furniture";
         else if (category == Category.Pottery) return "Pottery";
         else if (category == Category.Glassware) return "Glassware";
-        else return "Collectibles";
+        else return "Collectables";
     }
 
     function periodToString(
         Period period
     ) internal pure returns (string memory) {
         if (period == Period.Pre1700s) return "Pre1700s";
+        if (period == Period._1700s) return "1700s";
         if (period == Period._1800s) return "1800s";
         if (period == Period._1900s) return "1900s";
         else return "2000s";
+    }
+
+    function stringToAvailability(
+        string memory availability
+    ) internal pure returns (bool) {
+        string memory lowerAvailability = _toLowercase(availability);
+        if (
+            keccak256(abi.encodePacked(lowerAvailability)) ==
+            keccak256(abi.encodePacked("all"))
+        ) return true;
+        else if (
+            keccak256(abi.encodePacked(lowerAvailability)) ==
+            keccak256(abi.encodePacked("available"))
+        ) return true;
+        else if (
+            keccak256(abi.encodePacked(lowerAvailability)) ==
+            keccak256(abi.encodePacked("unavailable"))
+        ) return false;
+        else revert("Invalid availability");
     }
 }

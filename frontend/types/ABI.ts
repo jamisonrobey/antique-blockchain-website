@@ -720,55 +720,31 @@ export const CERTIFICATION_CONTRACT_ABI = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "name",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "description",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "category",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "period",
-            type: "string",
-          },
-          {
-            internalType: "address",
-            name: "owner",
-            type: "address",
-          },
-          {
-            internalType: "bool",
-            name: "available",
-            type: "bool",
-          },
-          {
-            internalType: "string",
-            name: "image",
-            type: "string",
-          },
-        ],
+        indexed: true,
+        internalType: "uint256",
+        name: "antiqueId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "oldOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+      {
         indexed: false,
-        internalType: "struct AntiqueObject[]",
-        name: "antiques",
-        type: "tuple[]",
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
       },
     ],
-    name: "AntiquesFetched",
+    name: "OwnerChanged",
     type: "event",
   },
   {
@@ -885,6 +861,24 @@ export const CERTIFICATION_CONTRACT_ABI = [
     inputs: [
       {
         internalType: "uint256",
+        name: "antiqueId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "changeOwner",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
         name: "id",
         type: "uint256",
       },
@@ -960,9 +954,9 @@ export const CERTIFICATION_CONTRACT_ABI = [
         type: "string",
       },
       {
-        internalType: "bool",
-        name: "available",
-        type: "bool",
+        internalType: "string",
+        name: "availability",
+        type: "string",
       },
     ],
     name: "getAntiques",

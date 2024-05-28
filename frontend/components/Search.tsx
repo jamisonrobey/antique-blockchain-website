@@ -24,20 +24,23 @@ export const Search: React.FC<SearchProps> = ({ initialResults }) => {
   const [results, setResults] = useState<Antique[]>(initialResults);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    fetchData();
+  }, [page, selectedCategory, selectedCirca, selectedAvailability]);
+
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
-    setPage(1); // Reset page number to 1
-    fetchData();
+    setPage(1);
   };
 
   const handleCircaChange = (value: string) => {
     setSelectedCirca(value);
-    setPage(1); // Reset page number to 1
+    setPage(1);
   };
 
   const handleAvailabilityChange = (value: string) => {
     setSelectedAvailability(value);
-    setPage(1); // Reset page number to 1
+    setPage(1);
   };
 
   const fetchData = () => {
@@ -88,12 +91,6 @@ export const Search: React.FC<SearchProps> = ({ initialResults }) => {
           value={selectedAvailability}
           onValueChange={handleAvailabilityChange}
         />
-        <button
-          className={`mt-5 rounded-md border border-slate-200 p-2 text-7xl text-slate-800 shadow-sm duration-100 hover:bg-blue-500 hover:text-white`}
-          onClick={fetchData}
-        >
-          <UpdateIcon className="h-5 w-5" />
-        </button>
       </div>
       <div className="my-8 w-full border-b-2 border-slate-200"></div>
       <div className="no-scrollbar grid w-full grid-cols-[repeat(auto-fit,_minmax(400,_1fr))] gap-2 overflow-scroll rounded-2xl">

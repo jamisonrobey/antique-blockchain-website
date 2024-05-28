@@ -7,6 +7,7 @@ interface AntiqueResultProps {
 }
 
 export const AntiqueResult: React.FC<AntiqueResultProps> = ({ antique }) => {
+  console.log(antique.available);
   return (
     <div className="m-4 flex flex-col items-center rounded-md border border-slate-200 p-3 shadow-sm">
       <img className="h-96 w-96" src={antique.image} alt={antique.name} />

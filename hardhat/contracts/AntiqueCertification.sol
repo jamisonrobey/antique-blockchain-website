@@ -17,6 +17,12 @@ import "./utils.sol";
 contract AntiqueCertification is Utils {
     address public antiqueCertificationBody;
     Antique[] public antiques;
+    event OwnerChanged(
+        uint256 indexed antiqueId,
+        address indexed oldOwner,
+        address indexed newOwner,
+        uint256 timestamp
+    );
 
     event AntiqueAdded(
         uint256 indexed id,
@@ -24,16 +30,24 @@ contract AntiqueCertification is Utils {
         string category,
         string period
     );
-    event AntiquesFetched(AntiqueObject[] antiques);
 
     constructor() {
         antiqueCertificationBody = msg.sender;
     }
 
-    modifier onlyOwner() {
+    modifier onlyCertBody() {
         require(
             antiqueCertificationBody == msg.sender,
             "Only allowed by antique certification body."
+        );
+        _;
+    }
+
+    modifier onlyOwner(uint256 antiqueId) {
+        require(antiqueId < antiques.length, "Invalid antique ID");
+        require(
+            msg.sender == antiques[antiqueId].owner,
+            "Only allowed by antique owner."
         );
         _;
     }
@@ -46,7 +60,7 @@ contract AntiqueCertification is Utils {
         address antiqueOwner,
         bool availability,
         string memory image
-    ) public onlyOwner {
+    ) public onlyCertBody {
         Category category = stringToCategory(categoryStr);
         Period period = stringToPeriod(periodStr);
         uint256 id = antiques.length; // Get the new id based on the current length of the antiques array
@@ -86,15 +100,16 @@ contract AntiqueCertification is Utils {
         uint256 pageNumber,
         string memory categoryStr,
         string memory periodStr,
-        bool available
+        string memory availability // Changed to string
     ) external view returns (AntiqueObject[] memory) {
         require(antiques.length > 0, "There are no antiques stored");
 
-        /* Handle special all keyword */
+        /* Handle special "all" keyword */
         bool matchAllCategories = keccak256(abi.encodePacked(categoryStr)) ==
             keccak256(abi.encodePacked("all"));
         bool matchAllPeriods = keccak256(abi.encodePacked(periodStr)) ==
             keccak256(abi.encodePacked("all"));
+        bool available = stringToAvailability(availability); // Convert availability string to boolean
 
         /* default value */
         Category category = Category(0);
@@ -127,7 +142,7 @@ contract AntiqueCertification is Utils {
         uint256 endIndex = startIndex + itemsPerPage;
 
         /* Ensure the end index doesn't exceed the matched antiques count */
-        require(startIndex >= matchedCount, "end");
+        require(startIndex <= matchedCount, "end");
         if (endIndex > matchedCount) {
             endIndex = matchedCount;
         }
@@ -164,5 +179,18 @@ contract AntiqueCertification is Utils {
         }
 
         return paginatedAntiquesObjects;
+    }
+
+    function changeOwner(
+        uint256 antiqueId,
+        address newOwner
+    ) external onlyOwner(antiqueId) {
+        require(newOwner != address(0), "New owner cannot be the zero address");
+
+        Antique storage antique = antiques[antiqueId];
+        address oldOwner = antique.owner;
+        antique.owner = newOwner;
+
+        emit OwnerChanged(antiqueId, oldOwner, newOwner, block.timestamp);
     }
 }

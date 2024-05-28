@@ -10,14 +10,14 @@ import {
   CERTIFICATION_CONTRACT_DEV,
   CERTIFICATION_CONTRACT_PROD,
 } from "@/types/types";
-import { convertToKeyValue } from "./api/antiques/route";
+import { convertToKeyValue } from "../utils/utils";
 
 const provider = new ethers.providers.JsonRpcProvider({
   fetchOptions: {
     referrer: "http://localhost",
   },
   // @ts-ignore
-  url: process.env.NGROK_PROXY,
+  url: process.env.INFURA_KEY,
 });
 
 export default async function Page() {
@@ -29,10 +29,8 @@ export default async function Page() {
       provider,
     );
 
-    const antiqueRes = await contract.getAntiques(1, "all", "all", true);
+    const antiqueRes = await contract.getAntiques(1, "all", "all", "all");
     antiques = convertToKeyValue(antiqueRes);
-    console.log(antiques);
-    console.log("here");
   } catch (error) {
     console.error(error);
   }

@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { NextResponse } from "next/server";
+import { convertToKeyValue } from "@/utils/utils";
 import {
   CERTIFICATION_ABI_DEV,
   CERTIFICATION_ABI_PROD,
@@ -17,35 +18,17 @@ const provider = new ethers.providers.JsonRpcProvider({
     referrer: "http://localhost",
   },
   // @ts-ignore
-  url: process.env.NGROK_PROXY,
+  url: process.env.INFURA_KEY,
 });
-
-export function convertToKeyValue(antiquesArray: any[]): Antique[] {
-  let antiques: Antique[] = [];
-
-  antiquesArray.forEach((antique: any) => {
-    antiques.push({
-      id: antique.id._hex,
-      name: antique.name,
-      description: antique.description,
-      category: antique.category,
-      period: antique.period,
-      owner: antique.owner,
-      available: antique.available,
-      image: antique.image,
-    });
-  });
-
-  return antiques;
-}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const pageNumber = searchParams.get("pageNumber") || "1";
   const category = searchParams.get("category") || "all";
   const period = searchParams.get("period") || "all";
-  const available = searchParams.get("available") === "true";
+  const available = searchParams.get("available") || "all";
   const offset = (parseInt(pageNumber) - 1) * 5; // 5 is items per page
+
   try {
     const contract = new ethers.Contract(
       CERTIFICATION_CONTRACT_ADDRESS,
@@ -57,12 +40,13 @@ export async function GET(request: Request) {
       pageNumber,
       category,
       period,
-      true,
+      available,
     );
 
     const convertedJson = convertToKeyValue(antiques);
     return NextResponse.json(convertedJson);
   } catch (error) {
+    console.log(error);
     // @ts-ignore
     if (error.reason === "end") {
       return NextResponse.json({ status: 205 });
