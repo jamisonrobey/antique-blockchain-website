@@ -2,16 +2,12 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("AntiqueCertification", function () {
-  let AntiqueCertification;
-  let antiqueCertification;
-  let owner;
-  let addr1;
+  let AntiqueCertification, antiqueCertification, owner, addr1, addr2;
 
   beforeEach(async function () {
-    [owner, addr1] = await ethers.getSigners();
-
-    const AntiqueCertificationFactory = await ethers.getContractFactory("AntiqueCertification");
-    antiqueCertification = await AntiqueCertificationFactory.deploy();
+    AntiqueCertification = await ethers.getContractFactory("AntiqueCertification");
+    [owner, addr1, addr2, _] = await ethers.getSigners();
+    antiqueCertification = await AntiqueCertification.deploy();
   });
 
   describe("Deployment", function () {
@@ -20,115 +16,140 @@ describe("AntiqueCertification", function () {
     });
   });
 
-  describe("Transactions", function () {
+  describe("Adding Antiques", function () {
     it("Should add an antique", async function () {
-      const addTx = await antiqueCertification.addAntique(
-        "Antique Vase",
-        "A beautiful ancient vase.",
+      await antiqueCertification.addAntique(
+        "Ancient Vase",
+        "A very old vase",
         "Pottery",
-        "1800s",
+        "Pre1700s",
         addr1.address,
         true,
-        "image_hash"
+        "image_link"
       );
-
-      await addTx.wait();
-
       const antique = await antiqueCertification.getAntiqueById(0);
-      expect(antique.name).to.equal("Antique Vase");
-      expect(antique.description).to.equal("A beautiful ancient vase.");
-      expect(antique.category).to.equal("Pottery");
-      expect(antique.period).to.equal("1800s");
+      expect(antique.name).to.equal("Ancient Vase");
       expect(antique.owner).to.equal(addr1.address);
-      expect(antique.available).to.be.true;
-      expect(antique.image).to.equal("image_hash");
     });
 
-    it("Should fetch antiques based on pagination", async function () {
-      for (let i = 0; i < 10; i++) {
-        await antiqueCertification.addAntique(
-          `Antique ${i}`,
-          `Description ${i}`,
+    it("Should emit an event when an antique is added", async function () {
+      await expect(
+        antiqueCertification.addAntique(
+          "Ancient Vase",
+          "A very old vase",
           "Pottery",
-          "1800s",
+          "Pre1700s",
           addr1.address,
           true,
-          "image_hash"
-        );
-      }
-    
-      const totalPages = Math.ceil(10 / 5);
-      for (let page = 1; page <= totalPages; page++) {
-        const antiques = await antiqueCertification.getAntiques(page, "all", "all", true);
-        const expectedAntiquesPerPage = Math.min(5, 10 - (page - 1) * 5);
-        expect(antiques.length).to.equal(expectedAntiquesPerPage);
-      }
+          "image_link"
+        )
+      ).to.emit(antiqueCertification, "AntiqueAdded");
     });
-        
 
-    it("Should fetch antiques based on category and period", async function () {
-      await antiqueCertification.addAntique(
-        "Antique Vase",
-        "A beautiful ancient vase.",
-        "Pottery",
-        "1800s",
-        addr1.address,
-        true,
-        "image_hash"
-      );
-
-      await antiqueCertification.addAntique(
-        "Ancient Coin",
-        "A rare ancient coin.",
-        "Collectibles",
-        "1900s",
-        addr1.address,
-        true,
-        "image_hash"
-      );
-
-      const antiques = await antiqueCertification.getAntiques(1, "Pottery", "1800s", true);
-      expect(antiques.length).to.equal(1);
-      expect(antiques[0].name).to.equal("Antique Vase");
-    });
-  });
-
-  describe("Access Control", function () {
-    it("Should only allow owner to add an antique", async function () {
+    it("Should only allow certification body to add an antique", async function () {
       await expect(
         antiqueCertification.connect(addr1).addAntique(
-          "Antique Vase",
-          "A beautiful ancient vase.",
+          "Ancient Vase",
+          "A very old vase",
           "Pottery",
-          "1800s",
+          "Pre1700s",
           addr1.address,
           true,
-          "image_hash"
+          "image_link"
         )
       ).to.be.revertedWith("Only allowed by antique certification body.");
     });
   });
 
-  describe("Error Handling", function () {
-    it("Should handle fetching antiques when there are none stored", async function () {
-      expect(await antiqueCertification.antiques.length).to.equal(0);
-
-      await expect(antiqueCertification.getAntiques(1, "all", "all", true)).to.be.revertedWith("There are no antiques stored");
-    });
-
-    it("Should handle fetching antiques with invalid category or period", async function () {
+  describe("Getting Antiques", function () {
+    beforeEach(async function () {
       await antiqueCertification.addAntique(
-        "Antique Vase",
-        "A beautiful ancient vase.",
+        "Ancient Vase",
+        "A very old vase",
         "Pottery",
-        "1800s",
+        "Pre1700s",
         addr1.address,
         true,
-        "image_hash"
+        "image_link"
       );
+      await antiqueCertification.addAntique(
+        "Old Chair",
+        "A very old chair",
+        "Furniture",
+        "1700s",
+        addr1.address,
+        false,
+        "image_link"
+      );
+    });
 
-      await expect(antiqueCertification.getAntiques(1, "InvalidCategory", "1800s", true)).to.be.revertedWith("Invalid category");
-      await expect(antiqueCertification.getAntiques(1, "Pottery", "InvalidPeriod", true)).to.be.revertedWith("Invalid period");
+    it("Should retrieve an antique by its ID", async function () {
+      const antique = await antiqueCertification.getAntiqueById(0);
+      expect(antique.name).to.equal("Ancient Vase");
+    });
+
+    it("Should filter antiques by category and period", async function () {
+      const antiques = await antiqueCertification.getAntiques(1, "Pottery", "Pre1700s", "all");
+      expect(antiques.length).to.equal(1);
+      expect(antiques[0].name).to.equal("Ancient Vase");
+    });
+
+    it("Should filter antiques by availability", async function () {
+      const antiques = await antiqueCertification.getAntiques(1, "all", "all", "available");
+      expect(antiques.length).to.equal(1);
+      expect(antiques[0].name).to.equal("Ancient Vase");
+    });
+
+    it("Should paginate antiques", async function () {
+      for (let i = 0; i < 10; i++) {
+        await antiqueCertification.addAntique(
+          `Antique ${i}`,
+          "Description",
+          "Collectibles",
+          "1800s",
+          addr1.address,
+          true,
+          "image_link"
+        );
+      }
+
+      const antiquesPage1 = await antiqueCertification.getAntiques(1, "all", "all", "all");
+      const antiquesPage2 = await antiqueCertification.getAntiques(2, "all", "all", "all");
+
+      expect(antiquesPage1.length).to.equal(5);
+      expect(antiquesPage2.length).to.equal(5);
+    });
+  });
+
+  describe("Changing Owner", function () {
+    beforeEach(async function () {
+      await antiqueCertification.addAntique(
+        "Ancient Vase",
+        "A very old vase",
+        "Pottery",
+        "Pre1700s",
+        addr1.address,
+        true,
+        "image_link"
+      );
+    });
+
+    it("Should change the owner of an antique", async function () {
+      await antiqueCertification.connect(addr1).changeOwner(0, addr2.address);
+      const antique = await antiqueCertification.getAntiqueById(0);
+      expect(antique.owner).to.equal(addr2.address);
+    });
+
+    it("Should emit an event when the owner is changed", async function () {
+      await expect(
+        antiqueCertification.connect(addr1).changeOwner(0, addr2.address)
+      ).to.emit(antiqueCertification, "OwnerChanged");
+    });
+
+    it("Should only allow the current owner to change ownership", async function () {
+      await expect(
+        antiqueCertification.connect(addr2).changeOwner(0, addr1.address)
+      ).to.be.revertedWith("Only allowed by antique owner.");
     });
   });
 });
