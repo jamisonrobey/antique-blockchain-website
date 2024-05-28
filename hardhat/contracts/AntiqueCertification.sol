@@ -127,7 +127,7 @@ contract AntiqueCertification is Utils {
         uint256 endIndex = startIndex + itemsPerPage;
 
         /* Ensure the end index doesn't exceed the matched antiques count */
-        require(startIndex >= matchedCount, "end");
+        require(startIndex <=matchedCount, "end");
         if (endIndex > matchedCount) {
             endIndex = matchedCount;
         }
