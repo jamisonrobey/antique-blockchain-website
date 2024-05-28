@@ -23,3 +23,5 @@ frontend/*.sw?
 
 hardhat/ignition/deployments/**
 **/.env.local
+frontend/.env.development
+frontend/.env.development

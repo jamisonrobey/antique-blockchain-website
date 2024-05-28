@@ -108,9 +108,7 @@ contract AntiqueCertification is Utils {
         }
 
         /* Filter antiques based on the provided criteria */
-        Antique[] memory matchedAntiques = new Antique[](antiques.length);
         uint256 matchedCount = 0;
-
         for (uint256 i = 0; i < antiques.length; i++) {
             bool categoryMatches = matchAllCategories ||
                 antiques[i].category == category;
@@ -119,17 +117,17 @@ contract AntiqueCertification is Utils {
             bool availabilityMatches = antiques[i].available == available;
 
             if (categoryMatches && periodMatches && availabilityMatches) {
-                matchedAntiques[matchedCount] = antiques[i];
                 matchedCount++;
             }
         }
 
         /* Calculate the start and end indices for the requested page */
-        uint256 itemsPerPage = 10;
+        uint256 itemsPerPage = 5;
         uint256 startIndex = (pageNumber - 1) * itemsPerPage;
         uint256 endIndex = startIndex + itemsPerPage;
 
         /* Ensure the end index doesn't exceed the matched antiques count */
+        require(startIndex >= matchedCount, "end");
         if (endIndex > matchedCount) {
             endIndex = matchedCount;
         }
@@ -138,19 +136,31 @@ contract AntiqueCertification is Utils {
             endIndex - startIndex
         );
         uint256 paginatedCount = 0;
-        for (uint256 i = startIndex; i < endIndex; i++) {
-            AntiqueObject memory antiqueObject = AntiqueObject({
-                id: matchedAntiques[i].id,
-                name: matchedAntiques[i].name,
-                description: matchedAntiques[i].description,
-                category: categoryToString(matchedAntiques[i].category),
-                period: periodToString(matchedAntiques[i].period),
-                owner: matchedAntiques[i].owner,
-                available: matchedAntiques[i].available,
-                image: matchedAntiques[i].image
-            });
-            paginatedAntiquesObjects[paginatedCount] = antiqueObject;
-            paginatedCount++;
+        for (uint256 i = 0; i < antiques.length; i++) {
+            bool categoryMatches = matchAllCategories ||
+                antiques[i].category == category;
+            bool periodMatches = matchAllPeriods ||
+                antiques[i].period == period;
+            bool availabilityMatches = antiques[i].available == available;
+
+            if (categoryMatches && periodMatches && availabilityMatches) {
+                if (paginatedCount >= startIndex && paginatedCount < endIndex) {
+                    AntiqueObject memory antiqueObject = AntiqueObject({
+                        id: antiques[i].id,
+                        name: antiques[i].name,
+                        description: antiques[i].description,
+                        category: categoryToString(antiques[i].category),
+                        period: periodToString(antiques[i].period),
+                        owner: antiques[i].owner,
+                        available: antiques[i].available,
+                        image: antiques[i].image
+                    });
+                    paginatedAntiquesObjects[
+                        paginatedCount - startIndex
+                    ] = antiqueObject;
+                }
+                paginatedCount++;
+            }
         }
 
         return paginatedAntiquesObjects;

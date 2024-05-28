@@ -12,10 +12,7 @@ interface MetaMaskConnectProps {
 export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
   children,
 }) => {
-  const { connected, connecting } = useSDK();
-  useEffect(() => {
-    console.table(connected, connecting);
-  }, [connected, connecting]);
+  const { connected } = useSDK();
   return (
     <>
       {connected ? (

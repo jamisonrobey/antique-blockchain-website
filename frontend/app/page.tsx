@@ -1,7 +1,15 @@
 import { Search } from "@/components/Search";
 import { ethers } from "ethers";
-import { CERTIFICATION_ABI_DEV } from "@/types/ABI";
-import { CERTIFICATION_CONTRACT_DEV } from "@/types/types";
+import {
+  CERTIFICATION_ABI_DEV,
+  CERTIFICATION_CONTRACT_ABI,
+  CERTIFICATION_ABI_PROD,
+} from "@/types/ABI";
+import {
+  CERTIFICATION_CONTRACT_ADDRESS,
+  CERTIFICATION_CONTRACT_DEV,
+  CERTIFICATION_CONTRACT_PROD,
+} from "@/types/types";
 import { convertToKeyValue } from "./api/antiques/route";
 
 const provider = new ethers.providers.JsonRpcProvider({
@@ -16,14 +24,15 @@ export default async function Page() {
   let antiques;
   try {
     const contract = new ethers.Contract(
-      CERTIFICATION_CONTRACT_DEV,
-      CERTIFICATION_ABI_DEV,
+      CERTIFICATION_CONTRACT_ADDRESS,
+      CERTIFICATION_CONTRACT_ABI,
       provider,
     );
 
     const antiqueRes = await contract.getAntiques(1, "all", "all", true);
     antiques = convertToKeyValue(antiqueRes);
     console.log(antiques);
+    console.log("here");
   } catch (error) {
     console.error(error);
   }

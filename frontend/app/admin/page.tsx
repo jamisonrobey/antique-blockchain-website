@@ -5,11 +5,16 @@ import { UploadIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { ethers } from "ethers";
 import { useState } from "react";
 import { interHeading } from "@/components/fonts/fonts";
-import { CERTIFICATION_ABI_DEV, CERTIFICATION_ABI_PROD } from "@/types/ABI";
+import {
+  CERTIFICATION_ABI_DEV,
+  CERTIFICATION_ABI_PROD,
+  CERTIFICATION_CONTRACT_ABI,
+} from "@/types/ABI";
 import {
   CERTIFICATION_WALLET,
   CERTIFICATION_CONTRACT_PROD,
   CERTIFICATION_CONTRACT_DEV,
+  CERTIFICATION_CONTRACT_ADDRESS,
 } from "@/types/types";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -130,8 +135,8 @@ export default function Admin() {
       // @ts-ignore
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const antiqueCertificationContract = new ethers.Contract(
-        CERTIFICATION_CONTRACT_DEV,
-        CERTIFICATION_ABI_DEV,
+        CERTIFICATION_CONTRACT_ADDRESS,
+        CERTIFICATION_CONTRACT_ABI,
         provider.getSigner(),
       );
 
