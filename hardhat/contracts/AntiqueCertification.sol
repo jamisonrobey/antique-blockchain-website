@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+
+// Represent an antique object with relevant properties
 struct AntiqueObject {
     uint256 id;
     string name;
@@ -31,6 +33,7 @@ contract AntiqueCertification is Utils {
         string period
     );
 
+    // Constructor to set the certification body to the contract deployer
     constructor() {
         antiqueCertificationBody = msg.sender;
     }
@@ -63,7 +66,7 @@ contract AntiqueCertification is Utils {
     ) public onlyCertBody {
         Category category = stringToCategory(categoryStr);
         Period period = stringToPeriod(periodStr);
-        uint256 id = antiques.length; // Get the new id based on the current length of the antiques array
+        uint256 id = antiques.length;
         antiques.push(
             Antique(
                 id,
@@ -79,6 +82,7 @@ contract AntiqueCertification is Utils {
         emit AntiqueAdded(id, name, categoryStr, periodStr);
     }
 
+    // Function to retrieve antique by its ID
     function getAntiqueById(
         uint256 id
     ) external view returns (AntiqueObject memory) {
@@ -96,6 +100,7 @@ contract AntiqueCertification is Utils {
             });
     }
 
+    // Function to get a paginated list of antiques based on provided criteria
     function getAntiques(
         uint256 pageNumber,
         string memory categoryStr,
