@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
     it is simply a contract that is inherited by AntiqueCreation and AntiqueInteraction contracts that provide helpful functions
 */
 
+// Enumeration for antique categories
 enum Category {
     Furniture,
     Pottery,
@@ -12,6 +13,7 @@ enum Category {
     Collectibles
 }
 
+// Enumeration for antique periods
 enum Period {
     Pre1700s,
     _1800s,
@@ -19,6 +21,7 @@ enum Period {
     _2000s
 }
 
+// Representing antique objects
 struct Antique {
     uint256 id;
     string name;
@@ -30,9 +33,8 @@ struct Antique {
     string image;
 }
 
+// Contract providing helper functions for managing antique objects
 contract Utils {
-    // Existing functions...
-
     /* Handy toLower() implementation from: https://gist.github.com/ottodevs/c43d0a8b4b891ac2da675f825b1d1dbf?permalink_comment_id=4976821#gistcomment-4976821 */
     function copyBytes(
         bytes memory _bytes

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+
+// Represent an antique object with relevant properties
 struct AntiqueObject {
     uint256 id;
     string name;
@@ -26,10 +28,12 @@ contract AntiqueCertification is Utils {
     );
     event AntiquesFetched(AntiqueObject[] antiques);
 
+    // Constructor to set the certification body to the contract deployer
     constructor() {
         antiqueCertificationBody = msg.sender;
     }
 
+    // Modifier to restrict function access to the certification body only
     modifier onlyOwner() {
         require(
             antiqueCertificationBody == msg.sender,
@@ -38,6 +42,7 @@ contract AntiqueCertification is Utils {
         _;
     }
 
+    // Function to add a new antique (only accessible by the certification body using onlyOwner)
     function addAntique(
         string memory name,
         string memory description,
@@ -49,7 +54,7 @@ contract AntiqueCertification is Utils {
     ) public onlyOwner {
         Category category = stringToCategory(categoryStr);
         Period period = stringToPeriod(periodStr);
-        uint256 id = antiques.length; // Get the new id based on the current length of the antiques array
+        uint256 id = antiques.length; 
         antiques.push(
             Antique(
                 id,
@@ -65,6 +70,7 @@ contract AntiqueCertification is Utils {
         emit AntiqueAdded(id, name, categoryStr, periodStr);
     }
 
+    // Function to retrieve antique by its ID
     function getAntiqueById(
         uint256 id
     ) external view returns (AntiqueObject memory) {
@@ -82,6 +88,7 @@ contract AntiqueCertification is Utils {
             });
     }
 
+    // Function to get a paginated list of antiques based on provided criteria
     function getAntiques(
         uint256 pageNumber,
         string memory categoryStr,
@@ -127,7 +134,7 @@ contract AntiqueCertification is Utils {
         uint256 endIndex = startIndex + itemsPerPage;
 
         /* Ensure the end index doesn't exceed the matched antiques count */
-        require(startIndex <=matchedCount, "end");
+        require(startIndex <= matchedCount, "Invalid page number");
         if (endIndex > matchedCount) {
             endIndex = matchedCount;
         }
