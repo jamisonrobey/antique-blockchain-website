@@ -2,7 +2,9 @@
 # This is the repository for IFB452 - Assignment 3
 ### Live: [AntiqueChain](https://antique-blockchain-website.vercel.app/)
 
-### Notes for tutor / marker:
+### Notes for tutor / marker
+
+frontend and hardhat directories contain additional readmes with more detailed instructions
 
 #### Frontend
 You cannot run the frontend locally without secret environment variables.
