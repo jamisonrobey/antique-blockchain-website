@@ -2,17 +2,17 @@
 # This is the repository for IFB452 - Assignment 3
 ### Live: [AntiqueChain](https://antique-blockchain-website.vercel.app/)
 
-### Notes for tutor / marker
+## Notes for tutor / marker
 
 frontend and hardhat directories contain additional readmes with more detailed instructions
 
-#### Frontend
+### Frontend
 You cannot run the frontend locally without secret environment variables.
  - To test out the frontend code, please visit our live deployment instead.
  - The following seed phrase will give you access to the admin's accout in MetaMask
    -   *REPLACE WHEN HOME*
 
-#### Solidity / Backend
+### Solidity / Backend
 
 The solidity code for the project is in the `hardhat/` directory.
 It contains various tests, deploy scripts and the original Contract Code under the file path: `hardhat/contracts/AntiqueCertification.sol`
