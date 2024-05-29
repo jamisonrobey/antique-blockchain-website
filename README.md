@@ -9,8 +9,7 @@ frontend and hardhat directories contain additional readmes with more detailed i
 ### Frontend
 You cannot run the frontend locally without secret environment variables.
  - To test out the frontend code, please visit our live deployment instead.
- - The following seed phrase will give you access to the admin's accout in MetaMask
-   -   *REPLACE WHEN HOME*
+
 
 ### Solidity / Backend
 
