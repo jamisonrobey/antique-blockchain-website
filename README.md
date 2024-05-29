@@ -16,7 +16,7 @@ You cannot run the frontend locally without secret environment variables.
 
 The solidity code for the project is in the `hardhat/` directory.
 It contains various tests, deploy scripts and the original Contract Code under the file path: `hardhat/contracts/AntiqueCertification.sol`
-You can run the tests on your machine if, simpy clone this repository and:
+You can run the tests on your machine simply clone this repository and:
 
 ```bash
 cd hardhats
@@ -24,7 +24,7 @@ npx hardhat test
 ```
 
 You can also deploy the contracts locally, you will need to comment out the `sepolia` and `localhost` network in the configuration, or provide your own Sepolia private key.
- - If commented out then the contracts still deploy to local network just wuthout Sepolia account
+ - If commented out then the contracts still deploy to local network just without Sepolia account
 
 To dpeloy:
 ```
